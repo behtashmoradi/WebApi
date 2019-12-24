@@ -23,10 +23,10 @@ namespace WebApi
             services.AddDbContext<CampContext>();
             services.AddScoped<ICampRepository, CampRepository>();
             services.AddControllers();
-            services.AddApiVersioning(opt=> {
-                opt.ReportApiVersions = true;
-                opt.DefaultApiVersion = new ApiVersion(1, 1);
-            });
+            services.AddApiVersioning(opt => {
+                                                opt.ReportApiVersions = true;
+                                                opt.DefaultApiVersion = new ApiVersion(1, 1);
+                                            });
             var mappingConig = new MapperConfiguration(mc => { mc.AddProfile(new CampProfile()); });
             services.AddSingleton(mappingConig.CreateMapper());
             services.AddMvc()
