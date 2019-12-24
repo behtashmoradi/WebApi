@@ -23,10 +23,12 @@ namespace WebApi
             services.AddDbContext<CampContext>();
             services.AddScoped<ICampRepository, CampRepository>();
             services.AddControllers();
-            services.AddApiVersioning(opt => {
-                                                opt.ReportApiVersions = true;
-                                                opt.DefaultApiVersion = new ApiVersion(1, 1);
-                                            });
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 1);
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+            });
             var mappingConig = new MapperConfiguration(mc => { mc.AddProfile(new CampProfile()); });
             services.AddSingleton(mappingConig.CreateMapper());
             services.AddMvc()
@@ -50,7 +52,7 @@ namespace WebApi
 
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("Web site root. you need toi call the actions though controller");
                 });
             });
         }

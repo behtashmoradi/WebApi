@@ -12,6 +12,8 @@ using WebApi.Models;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
     [ApiController]
     public class CampsController : ControllerBase
     {
@@ -44,6 +46,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{moniker}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<CampsModel>> Get(string moniker)
         {
             try
@@ -59,6 +62,24 @@ namespace WebApi.Controllers
             }
 
         }
+        [HttpGet("{moniker}")]
+        [MapToApiVersion("1.1")]
+        public async Task<ActionResult<CampsModel>> Get11(string moniker)
+        {
+            try
+            {
+                var result = await this.campRepository.GetCampAsync(moniker,true);
+                return this.mapper.Map<CampsModel>(result);
+
+            }
+            catch (Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database issue");
+            }
+
+        }
+
         public async Task<ActionResult<CampsModel>> Post(CampsModel campsModel)
         {
             try
