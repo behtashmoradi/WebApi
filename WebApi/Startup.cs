@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApi.Data;
@@ -28,6 +29,7 @@ namespace WebApi
                 opt.ReportApiVersions = true;
                 opt.DefaultApiVersion = new ApiVersion(1, 1);
                 opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.ApiVersionReader = new HeaderApiVersionReader("X-Version");
             });
             var mappingConig = new MapperConfiguration(mc => { mc.AddProfile(new CampProfile()); });
             services.AddSingleton(mappingConig.CreateMapper());
