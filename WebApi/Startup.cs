@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using CoreCodeCamp.Data;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +25,7 @@ namespace WebApi
                 opt.ReportApiVersions = true;
                 opt.DefaultApiVersion = new ApiVersion(1, 1);
                 opt.AssumeDefaultVersionWhenUnspecified = true;
-                opt.ApiVersionReader = new HeaderApiVersionReader("X-Version");
+                opt.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("X-Version"), new QueryStringApiVersionReader("version","ver"));
             });
             var mappingConig = new MapperConfiguration(mc => { mc.AddProfile(new CampProfile()); });
             services.AddSingleton(mappingConig.CreateMapper());
