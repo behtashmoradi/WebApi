@@ -79,7 +79,7 @@ namespace WebApi.Controllers
             }
 
         }
-
+        [HttpPost]
         public async Task<ActionResult<CampsModel>> Post(CampsModel campsModel)
         {
             try

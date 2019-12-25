@@ -11,7 +11,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Route("api/Camps")]
+    [Route("api/Camps2")]
     [ApiVersion("2.0")]
     [ApiController]
     public class Camps2Controller : ControllerBase

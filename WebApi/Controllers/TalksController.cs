@@ -34,7 +34,7 @@ namespace WebApi.Controllers
                 var result = await this.campRepository.GetTalksByMonikerAsync(moniker);
                 return Ok(mapper.Map<TalkModel[]>(result));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return BadRequest();
@@ -57,12 +57,11 @@ namespace WebApi.Controllers
                 return Ok(this.mapper.Map<TalkModel>(talk));
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return BadRequest();
             }
-            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }
