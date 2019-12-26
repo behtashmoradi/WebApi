@@ -7,6 +7,8 @@ using CoreCodeCamp.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Options;
+using WebApi.Configurations;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -20,12 +22,14 @@ namespace WebApi.Controllers
         private readonly ICampRepository campRepository;
         private readonly IMapper mapper;
         private readonly LinkGenerator linkGenerator;
+        private readonly CampsApiConfiguration options;
 
-        public CampsController(ICampRepository campRepository,IMapper mapper,LinkGenerator linkGenerator)
+        public CampsController(ICampRepository campRepository,IMapper mapper,LinkGenerator linkGenerator,IOptions<CampsApiConfiguration> options)
         {
             this.campRepository = campRepository;
             this.mapper = mapper;
             this.linkGenerator = linkGenerator;
+            this.options = options.Value;
         }
 
         [HttpGet]

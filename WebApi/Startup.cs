@@ -10,11 +10,20 @@ using Microsoft.Extensions.Hosting;
 using WebApi.Data;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using System.Configuration;
+using WebApi.Configurations;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi
 {
     public class Startup
     {
+        private IConfiguration configuraion;
+        public Startup(IConfiguration configuraion)
+        {
+
+            this.configuraion = configuraion;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -29,6 +38,9 @@ namespace WebApi
                 opt.AssumeDefaultVersionWhenUnspecified = true;
                 opt.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("X-Version"), new QueryStringApiVersionReader("version", "ver"));
             });
+            
+            // add configuration using option pattern
+            services.Configure<CampsApiConfiguration>(configuraion.GetSection("CampsApiConfiguration"));
             var mappingConig = new MapperConfiguration(mc => { mc.AddProfile(new CampProfile()); });
             services.AddSingleton(mappingConig.CreateMapper());
             services.AddMvc()
@@ -69,6 +81,7 @@ namespace WebApi
             return info;
         }
 
+       
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
